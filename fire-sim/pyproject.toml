@@ -1,0 +1,26 @@
+[project]
+name = "fire-sim"
+version = "0.1.0"
+description = "Modbus TCP simulator for fire-panel monitoring load tests"
+requires-python = ">=3.9"
+authors = [{ name = "Fire Monitoring Team" }]
+dependencies = [
+    "pymodbus>=3.6,<4",
+    "fastapi>=0.110",
+    "uvicorn[standard]>=0.27",
+    "pydantic>=2.5",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "pytest-asyncio>=0.23"]
+
+[project.scripts]
+fire-sim = "fire_sim.main:main"
+fire-sim-poll = "fire_sim.loadtest:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
