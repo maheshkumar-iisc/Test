@@ -1,0 +1,21 @@
+services:
+  fire-sim:
+    build: .
+    container_name: fire-sim
+    ports:
+      - "8080:8080"           # control API
+      - "5020-5119:5020-5119" # 100 simulated panels
+    environment:
+      - PYTHONUNBUFFERED=1
+    command:
+      - --buildings
+      - "100"
+      - --base-port
+      - "5020"
+      - --api-port
+      - "8080"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:8080/health').status==200 else 1)"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
